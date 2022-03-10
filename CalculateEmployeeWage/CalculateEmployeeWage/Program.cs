@@ -2,33 +2,46 @@
 
 namespace CalculateEmployeeWage
 {
-    internal class Program
+    class EmployeeWageComputaion
     {
-        public const int empRatePrHr = 20;
-        public const int isFullTime = 1;
-        public const int isPartTime = 2;
-        public const int numOfDays = 20;
-        public const int maxHrs = 100;
+        private int _empRatePrHr;
+        private const int _isFullTime = 1;
+        private const int _isPartTime = 2;
+        private int _fullTimeHrs;
+        private int _partTimeHrs;
+        private int _numOfDays;
+        private int _maxHrs;
+        private int totalWage;
 
-        static void Main(string[] args)
+        public EmployeeWageComputaion(int empRatePrHr, int fullTimeHrs, int partTimeHrs, int maxdays, int maxHours)
         {
-            // UC6 Employees monthly wage for a given condition
-            Console.WriteLine("Welcome to Employee Wage Computation");
+            _empRatePrHr = empRatePrHr;
+            _fullTimeHrs = fullTimeHrs;
+            _partTimeHrs = partTimeHrs;
+            _numOfDays = maxdays;
+            _maxHrs = maxHours;
+        }
 
+        private int IsEmployeePresent()
+        {
+            return new Random().Next(0, 3);
+        }
+
+        public void CalculateWage()
+        {
             int workHr;
             int totalWrkHr = 0;
-            int totalWage;
             int totalWrkDays = 0;
-            while (totalWrkHr < maxHrs && totalWrkDays < numOfDays)
+
+            while (totalWrkHr < _maxHrs && totalWrkDays < _numOfDays)
             {
-                int employeeStatus = new Random().Next(0, 2);
-                switch (employeeStatus)
+                switch (IsEmployeePresent())
                 {
-                    case isFullTime:
-                        workHr = 8;
+                    case _isFullTime:
+                        workHr = _fullTimeHrs;
                         break;
-                    case isPartTime:
-                        workHr = 4;
+                    case _isPartTime:
+                        workHr = _partTimeHrs;
                         break;
                     default:
                         workHr = 0;
@@ -37,9 +50,20 @@ namespace CalculateEmployeeWage
                 totalWrkHr += workHr;
                 totalWrkDays++;
             }
-            totalWage = totalWrkHr * empRatePrHr;
-            Console.WriteLine("Employee total wage is " + totalWage
-                + " for {0} working Days", totalWrkDays);
+            totalWage = totalWrkHr * _empRatePrHr;
+            Console.WriteLine("Employee total wage is {0} for {1} working days", totalWage, totalWrkDays);
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            // UC7 Employees monthly wage using Function
+
+            Console.WriteLine("Welcome to Employee Wage Computation!");
+            Console.WriteLine();
+            EmployeeWageComputaion wage = new EmployeeWageComputaion(20, 8, 4, 20, 100);
+            wage.CalculateWage();
         }
     }
 }
