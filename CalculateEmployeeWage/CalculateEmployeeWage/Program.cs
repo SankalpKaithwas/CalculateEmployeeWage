@@ -4,41 +4,34 @@ namespace CalculateEmployeeWage
 {
     internal class Program
     {
+        public const int empRatePrHr = 20;
+        public const int isFullTime = 1;
+        public const int isPartTime = 2;
+
         static void Main(string[] args)
         {
+            // UC4 Part time Employees wage using switch statement
             Console.WriteLine("Welcome to Employee Wage Computation");
 
-            int wrkHr;
-            int empRatePrHr = 20; //constant            
-            int empWage;
-            int isFullTime = 1;
-            int isPresent = 1;  //constant
+            int workHr;                     
+            int totalWage;            
 
-            int employeeStatus = new Random().Next(0, 2);
-            int empTime = new Random().Next(0, 2);
-
-            if (employeeStatus == isPresent)
+            int employeeStatus = new Random().Next(0, 2);  
+            
+            switch (employeeStatus)
             {
-                if (empTime == isFullTime)
-                {
-                    Console.WriteLine("Employee is Present");
-                    wrkHr = 8;
-
-                }
-                else
-                {
-                    Console.WriteLine("Employe is Present");
-                    wrkHr = 4;
-                }
+                case isFullTime:
+                    workHr = 8;
+                    break;
+                case isPartTime:
+                    workHr = 4;
+                    break;
+                default:
+                    workHr = 0;
+                    break;
             }
-            else
-            {
-                Console.WriteLine("Employee is Absent");
-                wrkHr = 0;
-            }
-
-            empWage = wrkHr * empRatePrHr;
-            Console.WriteLine("Employee wage is " + empWage);
+            totalWage = empRatePrHr * workHr;
+            Console.WriteLine("Employee total wage is " + totalWage);
         }
     }
 }
