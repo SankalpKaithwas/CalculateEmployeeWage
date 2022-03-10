@@ -8,16 +8,18 @@ namespace CalculateEmployeeWage
         public const int isFullTime = 1;
         public const int isPartTime = 2;
         public const int numOfDays = 20;
+        public const int maxHrs = 100;
 
         static void Main(string[] args)
         {
-            // UC5 Employees monthly wage using switch statement
+            // UC6 Employees monthly wage for a given condition
             Console.WriteLine("Welcome to Employee Wage Computation");
 
             int workHr;
-            int empWage;
-            int totalWage = 0;
-            for (int days = 0; days < numOfDays; days++)
+            int totalWrkHr = 0;
+            int totalWage;
+            int totalWrkDays = 0;
+            while (totalWrkHr < maxHrs && totalWrkDays < numOfDays)
             {
                 int employeeStatus = new Random().Next(0, 2);
                 switch (employeeStatus)
@@ -32,10 +34,12 @@ namespace CalculateEmployeeWage
                         workHr = 0;
                         break;
                 }
-                empWage = empRatePrHr * workHr;
-                totalWage += empWage;
+                totalWrkHr += workHr;
+                totalWrkDays++;
             }
-                Console.WriteLine("Employee total wage is " + totalWage);
+            totalWage = totalWrkHr * empRatePrHr;
+            Console.WriteLine("Employee total wage is " + totalWage
+                + " for {0} working Days", totalWrkDays);
         }
     }
 }
