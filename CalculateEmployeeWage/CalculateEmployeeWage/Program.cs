@@ -7,18 +7,26 @@ namespace CalculateEmployeeWage
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Employee Wage Computation");
-
-            int isPresent = 1;  //constant             ;
+            int empRatePrHr = 20; //constant
+            int empHr;
+            int empWage;
+            int isPresent = 1;  //constant
+                                //;
             int employeeStatus = new Random().Next(0, 2);
 
             if (employeeStatus == isPresent)
             {
                 Console.WriteLine("Employee is Present");
+                empHr = 8;
             }
             else
             {
                 Console.WriteLine("Employee is Absent");
+                empHr = 0;
             }
+
+            empWage = empRatePrHr * empHr;
+            Console.WriteLine("Employees daily wage is " + empWage);
         }
     }
 }
