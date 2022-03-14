@@ -1,25 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CalculateEmployeeWage
 {
+    class Company
+    {
+        public int EmpWagePrHr;
+        public int FullTimeWrkHr;
+        public int PartTimeWrkHr;
+        public int MaxWrkHrs;
+        public int MaxWrkDays;
+        public String CompanyName;
+
+        public Company(string companyName, int empWagePrHr, int fullTimeWrkHr, int partTimeWrkHr, int maxWrkHrs, int maxWrkDays)
+        {
+            CompanyName = companyName;
+            EmpWagePrHr = empWagePrHr;
+            FullTimeWrkHr = fullTimeWrkHr;
+            PartTimeWrkHr = partTimeWrkHr;
+            MaxWrkHrs = maxWrkHrs;
+            MaxWrkDays = maxWrkDays;
+        }
+    }
     class EmployeeWageComputaion
     {
-        private int _empRatePrHr;
+
         private const int _isFullTime = 1;
         private const int _isPartTime = 2;
-        private int _fullTimeHrs;
-        private int _partTimeHrs;
-        private int _numOfDays;
-        private int _maxHrs;
         private int totalWage;
+        private Dictionary<string, Company> companies = new Dictionary<string, Company>();
 
-        public EmployeeWageComputaion(int empRatePrHr, int fullTimeHrs, int partTimeHrs, int maxdays, int maxHours)
+        public void AddCompany(string CompanyName, int EmpWagePrHr, int FullTimeWrkHr, int PartTimeWrkHr, int MaxWrkHrs, int MaxWrkDays)
         {
-            _empRatePrHr = empRatePrHr;
-            _fullTimeHrs = fullTimeHrs;
-            _partTimeHrs = partTimeHrs;
-            _numOfDays = maxdays;
-            _maxHrs = maxHours;
+            Company company = new Company(CompanyName.ToLower(), EmpWagePrHr, FullTimeWrkHr, PartTimeWrkHr, MaxWrkHrs, MaxWrkDays);
+            companies.Add(CompanyName.ToLower(), company);
         }
 
         private int IsEmployeePresent()
@@ -27,21 +41,25 @@ namespace CalculateEmployeeWage
             return new Random().Next(0, 3);
         }
 
-        public void CalculateWage()
+        public void CalculateWage(string CompanyName)
         {
             int workHr;
             int totalWrkHr = 0;
             int totalWrkDays = 0;
 
-            while (totalWrkHr < _maxHrs && totalWrkDays < _numOfDays)
+            if (!companies.ContainsKey(CompanyName.ToLower()))
+                throw new ArgumentNullException("Company don't exist");
+            companies.TryGetValue(CompanyName.ToLower(), out Company company);
+
+            while (totalWrkHr <= company.MaxWrkHrs && totalWrkDays < company.MaxWrkDays)
             {
                 switch (IsEmployeePresent())
                 {
                     case _isFullTime:
-                        workHr = _fullTimeHrs;
+                        workHr = company.FullTimeWrkHr;
                         break;
                     case _isPartTime:
-                        workHr = _partTimeHrs;
+                        workHr = company.PartTimeWrkHr;
                         break;
                     default:
                         workHr = 0;
@@ -50,7 +68,8 @@ namespace CalculateEmployeeWage
                 totalWrkHr += workHr;
                 totalWrkDays++;
             }
-            totalWage = totalWrkHr * _empRatePrHr;
+            totalWage = totalWrkHr * company.EmpWagePrHr;
+            Console.WriteLine("Company name: " + CompanyName);
             Console.WriteLine("Employee total wage is {0} for {1} working days", totalWage, totalWrkDays);
         }
     }
@@ -58,12 +77,14 @@ namespace CalculateEmployeeWage
     {
         static void Main(string[] args)
         {
-            // UC7 Employees monthly wage using Function
-
+            // UC8 Employees monthly wage using Function for Multiple companies
             Console.WriteLine("Welcome to Employee Wage Computation!");
             Console.WriteLine();
-            EmployeeWageComputaion wage = new EmployeeWageComputaion(20, 8, 4, 20, 100);
-            wage.CalculateWage();
+            EmployeeWageComputaion wage = new EmployeeWageComputaion();
+            wage.AddCompany("TATA", 20, 8, 4, 100, 20);
+            wage.AddCompany("Mahindra", 30, 8, 4, 100, 20);
+            wage.CalculateWage("Tata");
+            wage.CalculateWage("Mahindra");
         }
     }
 }
