@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CalculateEmployeeWage
 {
-    class EmployeeWageComputaion
+    class EmployeeWageComputaion : IEmployeeWage
     {
         private const int _isFullTime = 1;
         private const int _isPartTime = 2;
