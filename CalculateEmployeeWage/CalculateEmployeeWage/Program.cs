@@ -16,13 +16,13 @@ namespace CalculateEmployeeWage
             wage.AddCompany("Mahindra", 30, 8, 4, 100, 40);
             wage.AddCompany("Microsoft", 100, 8, 4, 100, 30);
 
-            // UC10 Employee monthly wage using array
-            int[] wages = new int[3];
-            wages[0] = wage.CalculateWage("Microsoft");
-            wages[1] = wage.CalculateWage("Tata");
-            wages[2] = wage.CalculateWage("Mahindra");
+            // UC12 Employee monthly wage using ArrayList
+            ArrayList companyWages = new ArrayList();
+            companyWages.Add(wage.CalculateWage("Microsoft"));
+            companyWages.Add(wage.CalculateWage("Tata"));
+            companyWages.Add(wage.CalculateWage("Mahindra"));
 
-            foreach (var item in wages)
+            foreach (var item in companyWages)
             {
                 Console.WriteLine(item);
             }
