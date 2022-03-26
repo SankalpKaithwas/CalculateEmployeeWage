@@ -50,6 +50,30 @@ namespace CalculateEmployeeWage
             Console.WriteLine("Employee total wage is {0} for {1} working days", totalWage, totalWrkDays);
             return totalWage;
         }
+        public int DailyWage(string CompanyName, int rate)
+        {
+            int workHr;
+            if (!companies.ContainsKey(CompanyName.ToLower()))
+                throw new ArgumentNullException("Company don't exist");
+            companies.TryGetValue(CompanyName.ToLower(), out Company company);
+
+            switch (IsEmployeePresent())
+            {
+                case _isFullTime:
+                    workHr = company.FullTimeWrkHr;
+                    break;
+                case _isPartTime:
+                    workHr = company.PartTimeWrkHr;
+                    break;
+                default:
+                    workHr = 0;
+                    break;
+            }
+            int dailyWage = workHr * rate;
+            Console.WriteLine("Company name: " + CompanyName);
+            Console.WriteLine("Employee daily wage is {0}", dailyWage);
+            return dailyWage;
+        }
 
     }
 }

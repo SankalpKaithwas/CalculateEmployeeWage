@@ -15,6 +15,7 @@ namespace CalculateEmployeeWage
             wage.AddCompany("TATA", 20, 8, 4, 100, 20);
             wage.AddCompany("Mahindra", 30, 8, 4, 100, 40);
             wage.AddCompany("Microsoft", 100, 8, 4, 100, 30);
+            wage.AddCompany("Apple", 100, 8, 4, 100, 30);
 
             // UC12 Employee monthly wage using ArrayList
             ArrayList companyWages = new ArrayList();
@@ -27,6 +28,17 @@ namespace CalculateEmployeeWage
                 Console.WriteLine(item);
             }
 
+            // UC13 daily wage
+            ArrayList dailyWages = new ArrayList();
+            dailyWages.Add(wage.DailyWage("TATA", 50));
+            dailyWages.Add(wage.DailyWage("Apple", 50));
+            foreach (var wages in dailyWages)
+            {
+                Console.WriteLine(wages);
+            }
+
+          
+           
         }
     }
 }
